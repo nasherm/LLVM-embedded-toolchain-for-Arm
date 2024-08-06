@@ -73,6 +73,10 @@ Download a release of the toolchain for your platform from [Github
 releases](https://github.com/ARM-software/LLVM-embedded-toolchain-for-Arm/releases)
 and extract the archive into an arbitrary directory.
 
+### Pre-requisite for using toolchain on Windows
+
+Install appropriate latest supported Microsoft Visual C++ Redistributable package, such as from [Microsoft Visual C++ Redistributable latest supported downloads](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170).
+
 ### Using the toolchain
 
 > *Note:* If you are using the toolchain in a shared environment with untrusted input,
@@ -83,6 +87,8 @@ To use the toolchain, on the command line you need to provide the following opti
 * The FPU to use.
 * Disabling/enabling C++ exceptions and RTTI.
 * The C runtime library: either `crt0` or `crt0-semihost`.
+  `crt0` will be linked automatically, but this can be suppressed
+  with the `-nostartfiles` option so that `crt0-semihost` can be used.
 * The semihosting library, if using `crt0-semihost`.
 * A [linker script](
   https://sourceware.org/binutils/docs/ld/Scripts.html) specified with `-T`.
@@ -98,6 +104,7 @@ $ clang \
 -mfpu=none \
 -fno-exceptions \
 -fno-rtti \
+-nostartfiles \
 -lcrt0-semihost \
 -lsemihost \
 -T picolibc.ld \
@@ -126,6 +133,7 @@ $ clang \
 -mfpu=none \
 -fno-exceptions \
 -fno-rtti \
+-nostartfiles \
 -lcrt0-semihost \
 -lsemihost \
 -T picolibc.ld \
